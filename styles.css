@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
+.rows,
+.column {
+  border: 1px solid black;
+}
+
+.rows {
+  background-color: white;
+  display: flex;
+}
+
+.column {
+  padding: 10px;
+  flex: 1;
+}
+
+.column:hover {
+  background-color: aqua;
+}
