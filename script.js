@@ -1,7 +1,8 @@
 const container = document.querySelector(".page-container");
 const resize = document.querySelector("#resize");
+const gridSize = document.querySelector("#gridSize-text");
+const resizeBtn = document.querySelector("#resizeBtn");
 
-//Square divs 16 x 16
 function createGrid(size) {
   for (let rows = 0; rows < size; rows++) {
     const row = document.createElement("div");
@@ -24,15 +25,7 @@ function createGrid(size) {
 }
 
 createGrid(16);
-
-//Resizing the grid
-resize.addEventListener("click", () => {
-  removeGrid();
-
-  let size = parseInt(prompt("Size?"));
-
-  createGrid(size);
-});
+gridSize.textContent = 16;
 
 function removeGrid() {
   const row = document.querySelectorAll(".rows");
@@ -41,3 +34,16 @@ function removeGrid() {
     r.remove();
   }
 }
+
+resizeBtn.addEventListener("click", () => {
+  removeGrid();
+  let size = document.querySelector("#size").value;
+
+  if (size > 100) {
+    alert("Not allowed");
+    size = gridSize.textContent;
+  }
+
+  gridSize.textContent = size;
+  createGrid(size);
+});
