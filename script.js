@@ -10,22 +10,24 @@ function createGrid(size) {
 
     for (let cols = 0; cols < size; cols++) {
       const col = document.createElement("div");
+      let itemSize = 700 / size;
+      col.setAttribute("style", `width:${itemSize}px; height:${itemSize}px`);
       row.appendChild(col);
       col.classList.add("column");
     }
     document.querySelector(".container").appendChild(row);
   }
 
+  //HOVER OPTION
   const col = document.querySelectorAll(".column");
   for (const column of col) {
     column.addEventListener("mouseover", () => {
-      column.setAttribute("style", "background: lightgreen");
+      column.style.background = " lightgreen";
     });
   }
 }
 
 createGrid(16);
-gridSize.textContent = 16;
 
 function removeGrid() {
   const row = document.querySelectorAll(".rows");
@@ -39,11 +41,5 @@ resizeBtn.addEventListener("click", () => {
   removeGrid();
   let size = document.querySelector("#size").value;
 
-  if (size > 100) {
-    alert("Not allowed");
-    size = gridSize.textContent;
-  }
-
-  gridSize.textContent = size;
   createGrid(size);
 });
