@@ -18,11 +18,19 @@ function createGrid(size) {
     document.querySelector(".container").appendChild(row);
   }
 
+  gridTools();
+}
+
+function gridTools() {
   //HOVER OPTION
   const col = document.querySelectorAll(".column");
   for (const column of col) {
     column.addEventListener("mouseover", () => {
-      column.style.background = " lightgreen";
+      let r = Math.floor(Math.random() * 256);
+      let b = Math.floor(Math.random() * 256);
+      let g = Math.floor(Math.random() * 256);
+
+      column.style.background = `rgb(${r}, ${g}, ${b})`;
     });
   }
 }
