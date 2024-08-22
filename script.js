@@ -5,19 +5,13 @@ const resizeBtn = document.querySelector("#resizeBtn");
 const colorPicker = document.querySelector("#colorPicker");
 const color = document.querySelector("#color");
 const random = document.querySelector("#random");
+const eraser = document.querySelector("#eraser");
+const clear = document.querySelector("#clear");
 
 let colorMode = true;
 let randomMode = false;
-
-color.addEventListener("click", () => {
-  colorMode = true;
-  randomMode = false;
-});
-
-random.addEventListener("click", () => {
-  randomMode = true;
-  colorMode = false;
-});
+let eraserMode = false;
+let clearMode = false;
 
 createGrid(4);
 
@@ -43,15 +37,57 @@ function gridTools() {
   //HOVER OPTION
   const col = document.querySelectorAll(".column");
   for (const column of col) {
-    column.addEventListener("mouseover", () => {
+    column.addEventListener("click", () => {
       let r = Math.floor(Math.random() * 256);
       let b = Math.floor(Math.random() * 256);
       let g = Math.floor(Math.random() * 256);
 
-      if (colorMode) column.style.background = `${colorPicker.value}`;
-      else if (randomMode) column.style.background = `rgb(${r}, ${g}, ${b})`;
+      if (colorMode) {
+        column.style.background = `${colorPicker.value}`;
+        console.log("usehere");
+      } else if (randomMode) column.style.background = `rgb(${r}, ${g}, ${b})`;
+      else if (eraserMode) column.style.background = "white";
     });
   }
+
+  color.addEventListener("click", () => {
+    colorMode = true;
+    randomMode = false;
+    eraserMode = false;
+    clearMode = false;
+  });
+
+  random.addEventListener("click", () => {
+    randomMode = true;
+    colorMode = false;
+    eraserMode = false;
+    clearMode = false;
+  });
+
+  eraser.addEventListener("click", () => {
+    eraserMode = true;
+    randomMode = false;
+    colorMode = false;
+    clearMode = false;
+  });
+
+  clear.addEventListener("click", () => {
+    clearMode = true;
+    eraserMode = false;
+    randomMode = false;
+    colorMode = false;
+
+    for (const column of col) {
+      column.style.background = "white";
+    }
+  });
+
+  resizeBtn.addEventListener("click", () => {
+    removeGrid();
+    let size = document.querySelector("#size").value;
+
+    createGrid(size);
+  });
 }
 
 function removeGrid() {
@@ -61,10 +97,3 @@ function removeGrid() {
     r.remove();
   }
 }
-
-resizeBtn.addEventListener("click", () => {
-  removeGrid();
-  let size = document.querySelector("#size").value;
-
-  createGrid(size);
-});
