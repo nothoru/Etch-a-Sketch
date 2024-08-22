@@ -7,6 +7,7 @@ const color = document.querySelector("#color");
 const random = document.querySelector("#random");
 const eraser = document.querySelector("#eraser");
 const clear = document.querySelector("#clear");
+const gridRange = document.querySelector("#gridRange");
 
 let colorMode = true;
 let randomMode = false;
@@ -37,7 +38,7 @@ function gridTools() {
   //HOVER OPTION
   const col = document.querySelectorAll(".column");
   for (const column of col) {
-    column.addEventListener("click", () => {
+    column.addEventListener("mouseover", () => {
       let r = Math.floor(Math.random() * 256);
       let b = Math.floor(Math.random() * 256);
       let g = Math.floor(Math.random() * 256);
@@ -82,10 +83,11 @@ function gridTools() {
     }
   });
 
-  resizeBtn.addEventListener("click", () => {
+  gridRange.addEventListener("click", () => {
+    document.querySelector("#sample").textContent = gridRange.value;
     removeGrid();
-    let size = document.querySelector("#size").value;
 
+    let size = gridRange.value;
     createGrid(size);
   });
 }
