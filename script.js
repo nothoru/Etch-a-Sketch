@@ -3,6 +3,10 @@ const resize = document.querySelector("#resize");
 const gridSize = document.querySelector("#gridSize-text");
 const resizeBtn = document.querySelector("#resizeBtn");
 
+const color = document.querySelector("#colorPicker");
+
+createGrid(4);
+
 function createGrid(size) {
   for (let rows = 0; rows < size; rows++) {
     const row = document.createElement("div");
@@ -30,12 +34,10 @@ function gridTools() {
       let b = Math.floor(Math.random() * 256);
       let g = Math.floor(Math.random() * 256);
 
-      column.style.background = `rgb(${r}, ${g}, ${b})`;
+      column.style.background = `${color.value}`;
     });
   }
 }
-
-createGrid(16);
 
 function removeGrid() {
   const row = document.querySelectorAll(".rows");
