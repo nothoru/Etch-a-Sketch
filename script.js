@@ -2,8 +2,22 @@ const container = document.querySelector(".page-container");
 const resize = document.querySelector("#resize");
 const gridSize = document.querySelector("#gridSize-text");
 const resizeBtn = document.querySelector("#resizeBtn");
+const colorPicker = document.querySelector("#colorPicker");
+const color = document.querySelector("#color");
+const random = document.querySelector("#random");
 
-const color = document.querySelector("#colorPicker");
+let colorMode = true;
+let randomMode = false;
+
+color.addEventListener("click", () => {
+  colorMode = true;
+  randomMode = false;
+});
+
+random.addEventListener("click", () => {
+  randomMode = true;
+  colorMode = false;
+});
 
 createGrid(4);
 
@@ -34,7 +48,8 @@ function gridTools() {
       let b = Math.floor(Math.random() * 256);
       let g = Math.floor(Math.random() * 256);
 
-      column.style.background = `${color.value}`;
+      if (colorMode) column.style.background = `${colorPicker.value}`;
+      else if (randomMode) column.style.background = `rgb(${r}, ${g}, ${b})`;
     });
   }
 }
