@@ -8,16 +8,26 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="container">
-      <!-- <div class="rows">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-      </div>
-      </div> -->
+    <header><h1>Etch-a-sketch</h1></header>
 
-      <!--INSERT ROWS AND COLUMNS HERE WITH JS-->
+    <div class="page-container">
+      <div class="tools">
+        <input type="color" id="colorPicker" />
+
+        <button id="color">Color</button>
+        <button id="random">Random</button>
+        <button id="eraser">Eraser</button>
+        <button id="clearCanva">Clear</button>
+
+        <label for="gridRange">Grid Size: <span id="gridValue"></span> </label>
+        <input type="range" min="0" max="64" value="8" id="gridRange" />
+      </div>
+
+      <div class="container">
+        <!--Insert rows and column here-->
+      </div>
     </div>
+
+    <footer>Created by nothoru</footer>
   </body>
 </html>
