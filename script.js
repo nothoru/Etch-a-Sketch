@@ -1,20 +1,18 @@
-const container = document.querySelector(".page-container");
-const resize = document.querySelector("#resize");
-const gridSize = document.querySelector("#gridSize-text");
-const resizeBtn = document.querySelector("#resizeBtn");
+const container = document.querySelector(".container");
 const colorPicker = document.querySelector("#colorPicker");
 const color = document.querySelector("#color");
 const random = document.querySelector("#random");
 const eraser = document.querySelector("#eraser");
-const clear = document.querySelector("#clear");
+const clearCanva = document.querySelector("#clearCanva");
 const gridRange = document.querySelector("#gridRange");
+const gridValue = document.querySelector("#gridValue");
 
-let colorMode = true;
-let randomMode = false;
-let eraserMode = false;
-let clearMode = false;
+let activeMode = "color";
 
-createGrid(4);
+document.addEventListener("DOMContentLoaded", () => {
+  createGrid(gridRange.value);
+  gridValue.textContent = gridRange.value;
+});
 
 function createGrid(size) {
   for (let rows = 0; rows < size; rows++) {
@@ -25,70 +23,41 @@ function createGrid(size) {
       const col = document.createElement("div");
       let itemSize = 700 / size;
       col.setAttribute("style", `width:${itemSize}px; height:${itemSize}px`);
-      row.appendChild(col);
       col.classList.add("column");
+      row.appendChild(col);
     }
-    document.querySelector(".container").appendChild(row);
+    container.appendChild(row);
   }
 
   gridTools();
 }
 
 function gridTools() {
-  //HOVER OPTION
+  mode();
+
+  //Hover
   const col = document.querySelectorAll(".column");
   for (const column of col) {
     column.addEventListener("mouseover", () => {
-      let r = Math.floor(Math.random() * 256);
-      let b = Math.floor(Math.random() * 256);
-      let g = Math.floor(Math.random() * 256);
-
-      if (colorMode) {
-        column.style.background = `${colorPicker.value}`;
-        console.log("usehere");
-      } else if (randomMode) column.style.background = `rgb(${r}, ${g}, ${b})`;
-      else if (eraserMode) column.style.background = "white";
+      if (activeMode == "color") column.style.background = colorGenerator();
+      else if (activeMode == "random")
+        column.style.background = colorGenerator();
+      else if (activeMode == "eraser") column.style.background = "";
     });
   }
 
-  color.addEventListener("click", () => {
-    colorMode = true;
-    randomMode = false;
-    eraserMode = false;
-    clearMode = false;
-  });
-
-  random.addEventListener("click", () => {
-    randomMode = true;
-    colorMode = false;
-    eraserMode = false;
-    clearMode = false;
-  });
-
-  eraser.addEventListener("click", () => {
-    eraserMode = true;
-    randomMode = false;
-    colorMode = false;
-    clearMode = false;
-  });
-
-  clear.addEventListener("click", () => {
-    clearMode = true;
-    eraserMode = false;
-    randomMode = false;
-    colorMode = false;
-
+  clearCanva.addEventListener("click", () => {
     for (const column of col) {
-      column.style.background = "white";
+      column.style.background = "";
     }
   });
 
   gridRange.addEventListener("click", () => {
-    document.querySelector("#sample").textContent = gridRange.value;
     removeGrid();
 
-    let size = gridRange.value;
-    createGrid(size);
+    createGrid(gridRange.value);
+
+    gridValue.textContent = gridRange.value;
   });
 }
 
@@ -98,4 +67,19 @@ function removeGrid() {
   for (const r of row) {
     r.remove();
   }
+}
+
+function colorGenerator() {
+  let r = Math.floor(Math.random() * 256);
+  let g = Math.floor(Math.random() * 256);
+  let b = Math.floor(Math.random() * 256);
+
+  if (activeMode == "color") return `${colorPicker.value}`;
+  else if (activeMode == "random") return `rgb(${r}, ${g}, ${b})`;
+}
+
+function mode() {
+  color.onclick = () => (activeMode = "color");
+  random.onclick = () => (activeMode = "random");
+  eraser.onclick = () => (activeMode = "eraser");
 }
